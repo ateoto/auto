@@ -9,10 +9,10 @@ source "${AUTO_DIR}/utils/download-and-extract.sh"
 
 set -euo pipefail
 
-VERSION=${VERSION:-"2.4.0"}
-RELEASE_URL="https://github.com/cli/cli/releases/download"
-
+VERSION=${VERSION:-"0.8.0"}
+RELEASE_URL="https://github.com/koalaman/shellcheck/releases/download"
 AUTO_CACHE_DIR="${HOME}/.config/auto/cache"
+
 mkdir -p "${AUTO_CACHE_DIR}"
 
 if [[ "${AUTO_LINUX}" = true ]]; then
@@ -20,10 +20,10 @@ if [[ "${AUTO_LINUX}" = true ]]; then
 		echo "Install ARM64"	
 	fi
 	if [[ "${AUTO_ARM}" = true ]];then
-		PACKAGE="gh_${VERSION}_linux_armv6.tar.gz"
+		PACKAGE="shellcheck-v${VERSION}.linux.armv6hf.tar.xz"
 		download-and-extract "${RELEASE_URL}/v${VERSION}" "${PACKAGE}" 
-		cp -R "${AUTO_EXTRACT_DIR}/"* "${HOME}/.local/"
-		rm -rf "${AUTO_EXTRACT_DIR}"
+		mv "${AUTO_EXTRACT_DIR}/shellcheck-v${VERSION}/shellcheck" "${HOME}/.local/bin/"
+		rm -rf "${AUTO_EXTRACT_DIR:?}"
 	fi
 	if [[ "${AUTO_X86_64}" = true ]]; then
 		echo "Install Linux x86_64"
